@@ -13,7 +13,7 @@ def timestamp_difference(current, timestamp):
     difference = current - datetime.datetime.strptime(timestamp, app.config['DATETIME_FORMAT'])
     difference = difference.total_seconds()
     if difference < 60:
-        return difference + ' sec'
+        return str(int(difference)) + ' sec'
     elif difference < 3600:
         return str(int(round(difference/ 60))) + ' min'
     elif difference < 86400:
@@ -29,8 +29,10 @@ def get_explorer_data():
     transactions = r.get(app.config['EXPLORER_API_URL']+'_transactions?limit='+str(app.config['EXPLORER_ITEM_LIMIT'])).json()
     blocks = r.get(app.config['EXPLORER_API_URL']+'_blocks?limit='+str(app.config['EXPLORER_ITEM_LIMIT'])).json()
     for tn in transactions:
+        tn['plain_date'] = tn['dt']
         tn['dt'] = timestamp_difference(current, tn['dt'])
     for block in blocks:
+        block['plain_date'] = block['dt']
         block['dt'] = timestamp_difference(current, block['dt'])
     data = {
         'blocks' : blocks,
@@ -127,12 +129,12 @@ def search():
 def metrics():
     #from_timestamp = request.args.get('from_timestamp', default = '', type = str);
     #to_timestamp = request.args.get('to_timestamp', default = '', type = str);
-    interval = request.args.get('interval', default = '1h', type = str);
-    metric_name = request.args.get('metric_name', default = 'transaction_volume', type = str);
-    mode = request.args.get('mode', default = 'live', type = str);
+    interval = request.args.get('interval', default = '1h', type = str)
+    metric_name = request.args.get('metric_name', default = 'transaction_volume', type = str)
+    mode = request.args.get('mode', default = 'live', type = str)
     call_address = app.config['CHARTS_API_URL'] + '_metric?'
-    call_address += 'from_timestamp=2020-07-20T00:00:00'
-    call_address += '&to_timestamp=2020-07-24T00:00:00' 
+    call_address += 'from_timestamp=2020-07-23 00:00:00'
+    call_address += f'&to_timestamp={datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}' 
     call_address += '&interval=' + interval
     call_address += '&metric_name=' + metric_name
     call_address += '&mode=' + mode
