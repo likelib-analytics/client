@@ -12,7 +12,7 @@
 
 {% block content %}
 
-	{% if not data.address and not data.blocks and not data.tnx %}
+	{% if not data.addresses and not data.blocks and not data.tnx %}
 		<p class = "empty_error">Nothing was found according to the search request</p>
 	{% else %}
 
@@ -38,7 +38,7 @@
 			{% for item in data.tnx %}
 
 				<div class = "search__item">
-					<a href = "/block/{{ item }}">
+					<a href = "/transaction/{{ item }}">
 						#{{ item }}
 					</a>
 					<span>Transaction</span>
@@ -53,8 +53,8 @@
 			{% for item in data.addresses %}
 
 				<div class = "search__item">
-					<a href = "/block/{{ item }}">
-						#{{ item }}
+					<a href = "/address/{{ item }}">
+						# {{ item }}
 					</a>
 					<span>Address</span>
 				</div>

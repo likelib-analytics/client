@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Transaction {% print txn_hash %}{% endblock %}
+{% block title %}Transaction {% print data.transactionHash %}{% endblock %}
 
 {% block content %}
 
@@ -14,7 +14,7 @@
 				<span>Transaction Hash</span>
 			</div>
 			<div class = "feature_item__right">
-				<span>{{ txn_hash }}</span>
+				<span>{{ data.transactionHash }}</span>
 			</div>
 		</div>
 
