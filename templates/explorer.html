@@ -136,7 +136,7 @@
 
 						<div class = "instance_listitem_left">
 							<span>
-								<a href = "/transaction/10510485">
+								<a href = "/transaction/{{ tn['transactionHash'] }}">
 									{{ tn['transactionHash'][:10] }}...
 								</a>
 							</span>
@@ -154,7 +154,7 @@
 								</a> 
 								<i class="fas fa-long-arrow-alt-right"></i> 
 								<a href = "/address/{{ tn['to'] }}">
-									{{ tn['from'][:10] }}...
+									{{ tn['to'][:10] }}...
 								</a>
 							</span>
 						</div>

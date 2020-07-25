@@ -7,6 +7,7 @@ import datetime
 app = Flask(__name__)
 app.config.from_pyfile('settings.py')
 
+
 #To count the age of blocks and transactions
 def timestamp_difference(current, timestamp):
     difference = current - datetime.datetime.strptime(timestamp, app.config['DATETIME_FORMAT'])
@@ -97,12 +98,12 @@ def analytics():
 @app.route('/block/<block_depth>/')
 def single_block(block_depth):
     data = get_block(block_depth)
-    if data is None:
+    if not data['block']:
         abort(404)
-    return render_template('block.html', data=data['block'], block_depth = block_depth)
+    return render_template('block.html', data=data['block'][0], block_depth = block_depth)
 
 
-@app.route('/transaction/<txn_id>/')
+@app.route('/transaction/<path:txn_id>/')
 def single_transaction(txn_id):
     data = get_transaction(txn_id)
     if not data['transaction']:
@@ -113,7 +114,7 @@ def single_transaction(txn_id):
 @app.route('/address/<address_name>/')
 def single_address(address_name):
     data = get_address(address_name)
-    if address_name is None:
+    if not data['address_transactions']:
         abort(404)
     return render_template('address.html', data=data['address_transactions'], address_name = address_name)
 
