@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+	Search results 
+	{% if searchword %} 
+		for <span class = "search_result_header">{{searchword}}</span> 
+	{% endif %}
+
+{% endblock title %}
+
+
+{% block content %}
+
+	{% if not data.address and not data.blocks and not data.tnx %}
+		<p class = "empty_error">Nothing was found according to the search request</p>
+	{% else %}
+
+		<div class = "search_list">
+
+		{% if data.blocks %}
+		<div class = "search_subheader">Blocks:</div>
+			{% for item in data.blocks %}
+
+				<div class = "search__item">
+					<a href = "/block/{{ item }}">
+						#{{ item }}
+					</a>
+					<span>Block</span>
+				</div>
+
+			{% endfor %}
+		</div>
+		{% endif %}
+
+		{% if data.tnx %}
+		<div class = "search_subheader">Transactions:</div>
+			{% for item in data.tnx %}
+
+				<div class = "search__item">
+					<a href = "/block/{{ item }}">
+						#{{ item }}
+					</a>
+					<span>Transaction</span>
+				</div>
+
+			{% endfor %}
+		</div>
+		{% endif %}
+
+		{% if data.addresses %}
+		<div class = "search_subheader">Addresses:</div>
+			{% for item in data.addresses %}
+
+				<div class = "search__item">
+					<a href = "/block/{{ item }}">
+						#{{ item }}
+					</a>
+					<span>Address</span>
+				</div>
+
+			{% endfor %}
+		</div>
+		{% endif %}
+		
+
+	{% endif %}
+
+{% endblock content %}

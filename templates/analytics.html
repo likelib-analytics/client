@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block content %}
+
+<form id = "charts">
+
+	<div id = "result"></div>
+
+	<div class = "form_top">
+		<div class = "granulations">
+			<label >
+				<input type = "radio" name = "interval" value = "1m">
+				<span>minutes</span>
+			</label>
+
+			<label >
+				<input type = "radio" name = "interval" value = "1h">
+				<span>hours</span>
+			</label>
+
+			<label >
+				<input type = "radio" name = "interval" value = "1d">
+				<span>days</span>
+			</label>
+
+		</div>
+
+	</div>
+
+	<div class = "form_bottom">
+
+		<div id = "chart">
+
+		</div>
+
+		<div class = "metrics">
+			<label>
+				<input type="radio" name="metric_name" value = "active_addresses" />
+				<span>active_addresses</span>
+			</label>
+			<label>
+				<input type = "radio" name = "metric_name" value = "transaction_volume" />
+				<span>transaction_volume</span>
+			</label>
+		</div>
+
+	</div>
+
+	<button type = "button" class = "submit_chart">Show</button>
+
+</form>
+
+
+{% endblock %}

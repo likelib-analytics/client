@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Block #{% print block_depth %}{% endblock %}
+
+{% block content %}
+
+	<p div class = "small_subheader">Overview</p>
+	<div class = "single_item_table">
+		<div class = "feature__item">
+
+			<div class = "feafure_item__left">
+				<span>Block Depth</span>
+			</div>
+			<div class = "feature_item__right">
+				<span>{{ block_depth }}</span>
+			</div>
+		</div>
+
+		<div class = "feature__item">
+			<div class = "feafure_item__left">
+				<span>Prev. Block Hash</span>
+			</div>
+			<div class = "feature_item__right">
+				<span>{{ data.previous_block_hash }}</span>
+			</div>
+		</div>
+
+		<div class = "feature__item">
+			<div class = "feafure_item__left">
+				<span>Coinbase</span>
+			</div>
+			<div class = "feature_item__right">
+				<span>{{ data.coinbase }}</span>
+			</div>
+		</div>
+
+		<div class = "feature__item">
+			<div class = "feafure_item__left">
+				<span>Nonce</span>
+			</div>
+			<div class = "feature_item__right">
+				<span>{{ data.nonce }}</span>
+			</div>
+		</div>
+
+		<div class = "feature__item">
+			<div class = "feafure_item__left">
+				<span>Date</span>
+			</div>
+			<div class = "feature_item__right">
+				<span>{{ data.dt }}</span>
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}

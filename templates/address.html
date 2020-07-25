@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Address {% print address_name %}{% endblock %}
+
+{% block content %}
+
+	<p div class = "small_subheader">Transactions</p>
+	{% if data %}
+		{% for tn in data %}
+	<div class = "latest_transactions__listitem instance_listitem">
+
+		<div class = "instance_listitem_left">
+			<span>
+				<a href = "/transaction/10510485">
+					{{ tn['transactionHash'][:10] }}...
+				</a>
+			</span>
+			<span class = "little">
+				{{ tn['dt'] }}
+			</span>
+			<span class = "little">
+				{{ tn['depth'] }}
+			</span>
+		</div>
+		<div class = "instance_listitem_center">
+			<span class = "from-to">
+				<a href = "/address/{{ tn['from'] }}">
+					{{ tn['from'][:10] }}...
+				</a> 
+				<i class="fas fa-long-arrow-alt-right"></i> 
+				<a href = "/address/{{ tn['to'] }}">
+					{{ tn['from'][:10] }}...
+				</a>
+			</span>
+		</div>
+		<div class = "instance_listitem_right">
+			<span class = "purple">{{ tn['amount'] }} LikeLib</span>
+		</div>
+	</div>
+		{% endfor %}
+	{% endif %}
+
+{% endblock %}

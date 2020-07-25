@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+	{% block title %}Explorer{% endblock title%}
+
+		{% block content %}
+	
+		<div class = "mainpage__tables">
+			<div class = "latest_blocks instance_list">
+
+
+					<div class = "latest_blocks__topitem instance_topitem">
+						<div class = "instance_header">
+							<span>Latest Blocks</span>
+						</div>
+
+
+						{% if not data['blocks']  %}
+							<p>No blocks found</p>
+						{% else %}
+						<div class = "instance_topitem__data latest_blocks__topitem_data">
+
+							<div class = "topitem_left">
+								<p><a href = "/block/{{ data['blocks'][0]['depth'] }}">
+									#{{ data['blocks'][0]['depth'] }}
+								</a></p>
+								<span class = "little">
+									{{ data['blocks'][0]['dt'] }}
+								</span>
+							</div>
+							<div class = "topitem_center">
+								<p>
+									132
+								</p>
+								<span class = "little">Transactions</span>
+							</div>
+							<div class = "topitem_right">
+								<div class = "purple">
+									<p data-tooltip = "{{ data['blocks'][0]['previous_block_hash'] }}">
+										{{ data['blocks'][0]['previous_block_hash'][:10] }}...
+										<button data-copy = "{{ data['blocks'][0]['previous_block_hash'] }}" class = "copy">
+											<i class="fas fa-copy"></i>
+										</button>
+									</p>
+									<span class = "little">Hash</span>
+								</div>
+							</div>
+
+						</div>
+						{% endif %}
+
+					</div>
+					
+
+					{% if data['blocks'] %}
+						{% for block_item in data['blocks'][1:] %}
+						<div class = "latest_blocks__listitem instance_listitem">
+
+							<div class = "instance_listitem_left">
+								<span>
+									<a href = "/block/{{ block_item['depth'] }}">
+										{{ block_item['depth'] }}
+									</a>
+								</span>
+								<span class = "little">{{ block_item['dt'] }}</span>
+							</div>
+							<div class = "instance_listitem_center">
+								<span>
+									132 
+									<span class = "little">Transactions</span>
+								</span>
+							</div>
+							<div class = "instance_listitem_right">
+								<span class = "purple" data-tooltip = "{{ block_item['previous_block_hash'] }}">
+									{{ block_item['previous_block_hash'][:10] }}...
+								</span>
+								<button data-copy = "{{ block_item['previous_block_hash'] }}" class = "copy">
+									<i class="fas fa-copy"></i>
+								</button>
+							</div>
+						</div>
+						{% endfor %}
+					{% endif %}
+					
+
+			</div>
+
+			<div class = "latest_transactions">
+
+				<div class = "latest_transactions__topitem instance_topitem">
+						<div class = "instance_header">
+							<span>Latest Transactions</span>
+						</div>
+
+						{% if not data['transactions']  %}
+							<p>No transactions found</p>
+						{% else %}
+						<div class = "instance_topitem__data latest_transaction__topitem_data">
+							<div class = "topitem_left">
+								<p><a href = "/transaction/{{ data['transactions'][0]['transactionHash'] }}">
+									{{ data['transactions'][0]['transactionHash'][:10] }}...
+								</a></p>
+								<span class = "little">
+									{{ data['transactions'][0]['dt'] }},
+								</span>
+								<span class = "little">
+									depth: {{ data['transactions'][0]['depth'] }}
+								</span>
+							</div>
+							<div class = "topitem_center">
+								<p>
+									<span class = "little">From: </span>
+									<a href = "/address/{{ data['transactions'][0]['from'] }}">
+										{{ data['transactions'][0]['from'][:10] }}...
+									</a>
+								</p>
+								<p>
+									<span class = "little">To: </span>
+									<a href = "/address/{{ data['transactions'][0]['to'] }}">
+										{{ data['transactions'][0]['to'][:10] }}...
+									</a>
+								</p>
+							</div>
+							<div class = "topitem_right">
+								<div class = "purple">
+									<p>{{ data['transactions'][0]['amount'] }}</p>
+									<span class = "little">LikeLib</span>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+					
+					{% if data['transactions'] %}
+						{% for tn in data['transactions'][1:] %}
+					<div class = "latest_transactions__listitem instance_listitem">
+
+						<div class = "instance_listitem_left">
+							<span>
+								<a href = "/transaction/10510485">
+									{{ tn['transactionHash'][:10] }}...
+								</a>
+							</span>
+							<span class = "little">
+								{{ tn['dt'] }}
+							</span>
+							<span class = "little">
+								{{ tn['depth'] }}
+							</span>
+						</div>
+						<div class = "instance_listitem_center">
+							<span class = "from-to">
+								<a href = "/address/{{ tn['from'] }}">
+									{{ tn['from'][:10] }}...
+								</a> 
+								<i class="fas fa-long-arrow-alt-right"></i> 
+								<a href = "/address/{{ tn['to'] }}">
+									{{ tn['from'][:10] }}...
+								</a>
+							</span>
+						</div>
+						<div class = "instance_listitem_right">
+							<span class = "purple">{{ tn['amount'] }} LikeLib</span>
+						</div>
+					</div>
+						{% endfor %}
+					{% endif %}
+ 
+			</div>
+
+		</div>
+
+	</div>
+
+	{% endblock content %}
