@@ -806,3 +806,7 @@ p.small_subheader {
     margin-top: 5px;
     font-weight: 200;
 }
+
+div#chart {
+    min-height: 350px;
+}
