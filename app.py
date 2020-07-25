@@ -48,7 +48,7 @@ def get_analytics_data():
 def get_block(block_depth):
     block = r.get(app.config['COMMON_API_URL']+'_search_detailed?search='+str(block_depth)+'&search_type=blocks').json()
     data = {
-        'block' : block[0]
+        'block' : block
     }
     return data 
 
@@ -98,9 +98,9 @@ def analytics():
 @app.route('/block/<block_depth>/')
 def single_block(block_depth):
     data = get_block(block_depth)
-    if data is None:
+    if not data['block']:
         abort(404)
-    return render_template('block.html', data=data['block'], block_depth = block_depth)
+    return render_template('block.html', data=data['block'][0], block_depth = block_depth)
 
 
 @app.route('/transaction/<path:txn_id>/')
@@ -114,7 +114,7 @@ def single_transaction(txn_id):
 @app.route('/address/<address_name>/')
 def single_address(address_name):
     data = get_address(address_name)
-    if address_name is None:
+    if not data['address_transactions']:
         abort(404)
     return render_template('address.html', data=data['address_transactions'], address_name = address_name)
 
