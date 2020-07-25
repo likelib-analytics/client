@@ -3,6 +3,7 @@ import requests as r
 import json
 import datetime
 
+
 app = Flask(__name__)
 app.config.from_pyfile('settings.py')
 
@@ -150,5 +151,5 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+    port = app.config['PORT']
     app.run(debug=True, host='0.0.0.0', port=port)
