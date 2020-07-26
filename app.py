@@ -48,9 +48,13 @@ def get_analytics_data():
 
 #Single Block page
 def get_block(block_depth):
-    block = r.get(app.config['COMMON_API_URL']+'_search_detailed?search='+str(block_depth)+'&search_type=blocks').json()
+    block = r.get(app.config['COMMON_API_URL']+'_search_detailed', 
+                  params={'search': block_depth, 'search_type': 'blocks'}).json()
+    transactions_data = r.get(app.config['COMMON_API_URL']+'_block_history', 
+                              params={'block': block_depth}).json()
     data = {
-        'block' : block
+        'block' : block,
+        'transactions': transactions_data['transactions']
     }
     return data 
 
@@ -107,7 +111,8 @@ def single_block(block_depth):
     data = get_block(block_depth)
     if not data['block']:
         abort(404)
-    return render_template('block.html', data=data['block'][0], block_depth = block_depth)
+    return render_template('block.html', data=data['block'][0], block_depth = block_depth,
+                           transactions=data['transactions'])
 
 
 @app.route('/transaction/<path:txn_id>/')

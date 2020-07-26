@@ -406,7 +406,7 @@ footer a:hover
 }
 
 .page__header {
-    padding: 60px 0 20px;
+    padding: 20px 5px 10px;
     display: flex;
     justify-content: space-between;
 }
