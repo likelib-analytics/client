@@ -3,8 +3,7 @@
 {% block title %}Address {% print address_name %}{% endblock %}
 
 {% block content %}
-
-	<p div class = "small_subheader">Transactions</p>
+	<p class="address_balance"> Balance: {% print address_balance %} </p>
 	{% if data %}
 		{% for tn in data %}
 	<div class = "latest_transactions__listitem instance_listitem">
