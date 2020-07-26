@@ -83,9 +83,10 @@ def get_address(address_name):
 
 #Saerch results accirding to the searchword
 def get_search_results(searchword):
-    addresses = r.get(app.config['COMMON_API_URL']+'_search?search='+str(searchword)+'&search_type=address').json()
-    tnx = r.get(app.config['COMMON_API_URL']+'_search?search='+str(searchword)+'&search_type=transactions').json()
-    blocks = r.get(app.config['COMMON_API_URL']+'_search?search='+str(searchword)+'&search_type=blocks').json()
+    search_endpoint = app.config['COMMON_API_URL']+'_search'
+    addresses = r.get(search_endpoint, params={'search': searchword, 'search_type': 'address'}).json()
+    tnx = r.get(search_endpoint, params={'search': searchword, 'search_type': 'transactions'}).json()
+    blocks = r.get(search_endpoint, params={'search': searchword, 'search_type': 'blocks'}).json()
     data = {
         'blocks' : blocks['data'],
         'tnx' : tnx['data'],
