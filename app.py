@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, abort, render_template, request, jsonify
 import requests as r
 import json
 import datetime
-
+from urllib.parse import quote_plus
 
 app = Flask(__name__)
 app.config.from_pyfile('settings.py')
@@ -57,7 +57,8 @@ def get_block(block_depth):
 
 #Single Transaction page
 def get_transaction(txn_hash):
-    tnx = r.get(app.config['COMMON_API_URL']+'_search_detailed?search='+str(txn_hash)+'&search_type=transactions').json()
+    encoded_hash = quote_plus(txn_hash)
+    tnx = r.get(app.config['COMMON_API_URL']+'_search_detailed?search='+str(encoded_hash)+'&search_type=transactions').json()
     data = {
         'transaction' : tnx
     }
@@ -66,9 +67,13 @@ def get_transaction(txn_hash):
 
 #Single Address page
 def get_address(address_name):
-    address_transactions = r.get(app.config['COMMON_API_URL']+'_search_detailed?search='+str(address_name)+'&search_type=address').json()
+    address_transactions = r.get(app.config['COMMON_API_URL']+'_search_detailed', 
+                                 params={'search': address_name, 'search_type': 'address'}).json()
+    address_balance = r.get(app.config['COMMON_API_URL']+'_balance', 
+                                 params={'address': address_name}).json()
     data = {
-        'address_transactions' : address_transactions
+        'address_transactions' : address_transactions,
+        'address_balance': address_balance
     }
     return data
 
@@ -118,7 +123,8 @@ def single_address(address_name):
     data = get_address(address_name)
     if not data['address_transactions']:
         abort(404)
-    return render_template('address.html', data=data['address_transactions'], address_name = address_name)
+    return render_template('address.html', data=data['address_transactions'], 
+                           address_name=address_name, address_balance=data['address_balance']['balance'])
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():

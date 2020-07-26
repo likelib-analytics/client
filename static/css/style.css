@@ -406,9 +406,14 @@ footer a:hover
 }
 
 .page__header {
-    padding: 60px 0 40px;
+    padding: 60px 0 20px;
     display: flex;
     justify-content: space-between;
+}
+
+.address_balance {
+    padding: 0 10px 10px;
+    font-size: large;
 }
 
 div#menu ul {
